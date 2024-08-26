@@ -1,8 +1,6 @@
-# Redux Toolkit TypeScript Example
+# JNeedle E-Commerce website
 
-This example shows how to integrate Next.js with [Redux Toolkit](https://redux-toolkit.js.org).
-
-**Redux Toolkit**(also known as "RTK" for short) provides a standardized way to write Redux logic. It includes utilities that help simplify many common use cases, including [store setup](https://redux-toolkit.js.org/api/configureStore), [creating reducers and writing immutable update logic](https://redux-toolkit.js.org/api/createreducer), and even [creating entire "slices" of state at once](https://redux-toolkit.js.org/api/createslice). This example showcases each of these features in conjunction with Next.js.
+Developed a full-stack e-commerce platform with role-based authentication using Appwrite. The project includes a user-friendly interface for shoppers and an admin dashboard for managing inventory and orders. Built with Next.js and TypeScript for a responsive design, with plans to add a payment gateway for secure transactions.
 
 ## Deploy Your Own
 
@@ -25,5 +23,3 @@ yarn create next-app --example with-redux with-redux-app
 ```bash
 pnpm create next-app --example with-redux with-redux-app
 ```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
