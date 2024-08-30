@@ -1,4 +1,4 @@
-"use client";
+"use client"; // Ensure this is at the top for client-side rendering
 
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import { Minus, Plus, ShoppingBag } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { FaTrashAlt } from "react-icons/fa";
 import { formatPrice } from "@/helpers";
-import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation"; // Ensure proper use of hooks
 import Link from "next/link";
 import conf from "@/conf/conf";
 
@@ -24,13 +24,14 @@ import conf from "@/conf/conf";
 const CartItem = ({ item, handleDecrease, handleIncrease, handleRemove }) => (
   <TableRow key={item.id} className="border-none">
     <TableCell className="font-medium">
-      <a href={`${conf.baseURL}/products/${item.id}`}>
+      <Link href={`${conf.baseURL}/products/${item.id}`}>
+        {/* Use Link for client-side navigation */}
         <img
           src={item.imgurl[0].previewUrl}
           alt={item.name}
           className="w-[100px] h-[100px] object-contain"
         />
-      </a>
+      </Link>
     </TableCell>
     <TableCell>
       <div className="flex justify-center items-center w-32 border">
@@ -75,6 +76,7 @@ const EmptyCart = () => (
       <p className="text-muted-foreground mt-3">YOUR CART IS EMPTY!</p>
     </div>
     <Link href="/products">
+      {/* Use Link for client-side navigation */}
       <div className="w-fit py-10">
         <button className="hover:before:bg-white relative h-[50px] w-full overflow-hidden border border-stone-800 bg-stone-800 px-8 text-white shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-white before:transition-all before:duration-500 hover:text-stone-800 hover:before:left-0 hover:before:w-full">
           <span className="relative z-10 w-full text-sm tracking-widest flex items-center justify-center">
@@ -169,3 +171,4 @@ const LocalCart = () => {
 };
 
 export default LocalCart;
+
