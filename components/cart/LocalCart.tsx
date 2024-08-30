@@ -1,4 +1,4 @@
-"use client"; // Ensure this is at the top for client-side rendering
+"use client"; // Ensures client-side rendering
 
 import React from "react";
 import { Button } from "@/components/ui/button";
@@ -12,20 +12,24 @@ import {
 } from "@/components/ui/table";
 import { updateQuantity, removeFromCart } from "@/lib/features/cartSlice";
 import { AppDispatch, useAppSelector } from "@/lib/store";
-import { Minus, Plus, ShoppingBag } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { FaTrashAlt } from "react-icons/fa";
 import { formatPrice } from "@/helpers";
-import { useRouter } from "next/navigation"; // Ensure proper use of hooks
+import { useRouter } from "next/navigation"; // Correct usage of next/router
 import Link from "next/link";
 import conf from "@/conf/conf";
+import dynamic from "next/dynamic";
 
-// Extracted CartItem Component for better modularity
+// Dynamically import React Icons to avoid SSR issues
+const Minus = dynamic(() => import("lucide-react").then((mod) => mod.Minus), { ssr: false });
+const Plus = dynamic(() => import("lucide-react").then((mod) => mod.Plus), { ssr: false });
+const FaTrashAlt = dynamic(() => import("react-icons/fa").then((mod) => mod.FaTrashAlt), { ssr: false });
+const ShoppingBag = dynamic(() => import("lucide-react").then((mod) => mod.ShoppingBag), { ssr: false });
+
+// Separate CartItem component
 const CartItem = ({ item, handleDecrease, handleIncrease, handleRemove }) => (
   <TableRow key={item.id} className="border-none">
     <TableCell className="font-medium">
       <Link href={`${conf.baseURL}/products/${item.id}`}>
-        {/* Use Link for client-side navigation */}
         <img
           src={item.imgurl[0].previewUrl}
           alt={item.name}
@@ -68,7 +72,7 @@ const CartItem = ({ item, handleDecrease, handleIncrease, handleRemove }) => (
   </TableRow>
 );
 
-// Extracted EmptyCart Component for better modularity
+// Separate EmptyCart component
 const EmptyCart = () => (
   <div className="py-20">
     <div className="flex flex-col items-center justify-center">
@@ -76,7 +80,6 @@ const EmptyCart = () => (
       <p className="text-muted-foreground mt-3">YOUR CART IS EMPTY!</p>
     </div>
     <Link href="/products">
-      {/* Use Link for client-side navigation */}
       <div className="w-fit py-10">
         <button className="hover:before:bg-white relative h-[50px] w-full overflow-hidden border border-stone-800 bg-stone-800 px-8 text-white shadow-2xl transition-all before:absolute before:bottom-0 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-white before:transition-all before:duration-500 hover:text-stone-800 hover:before:left-0 hover:before:w-full">
           <span className="relative z-10 w-full text-sm tracking-widest flex items-center justify-center">
@@ -94,7 +97,7 @@ const LocalCart = () => {
   const cartItems = useAppSelector((state) => state.cart.items);
   const authStatus = useAppSelector((state) => state.auth.status);
 
-  // Combined handleIncreaseQuantity and handleDecreaseQuantity into one function for clarity
+  // Combined handler for quantity changes
   const handleQuantityChange = (itemId, currentQuantity, isIncrease) => {
     const newQuantity = isIncrease ? currentQuantity + 1 : currentQuantity - 1;
     if (newQuantity > 0) {
@@ -104,7 +107,7 @@ const LocalCart = () => {
     }
   };
 
-  // Simplified handleCheckout logic for better readability
+  // Simplified checkout logic
   const handleCheckout = () => {
     const path = authStatus ? "/checkout" : "/login";
     router.push(path);
@@ -134,10 +137,10 @@ const LocalCart = () => {
                   item={item}
                   handleDecrease={(id, qty) =>
                     handleQuantityChange(id, qty, false)
-                  } // Updated to use combined function
+                  }
                   handleIncrease={(id, qty) =>
                     handleQuantityChange(id, qty, true)
-                  } // Updated to use combined function
+                  }
                   handleRemove={(id) => dispatch(removeFromCart(id))}
                 />
               ))}
@@ -171,4 +174,5 @@ const LocalCart = () => {
 };
 
 export default LocalCart;
+
 
